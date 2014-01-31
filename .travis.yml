@@ -1,0 +1,6 @@
+language: python
+install:
+  - cython beretta.pyx
+  - python setup.py build_ext --inplace
+script:
+  - nosetests
