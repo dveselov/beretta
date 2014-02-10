@@ -48,3 +48,10 @@ class DecodeTestCase(unittest.TestCase):
     result = beretta.decode(b'\x83h\x05d\x00\x04bertd\x00\x04timeb'
                             b'\x00\x00\x05pb\x00\x00/\x8bb\x00\x00\x8dw')
     self.assertEqual(result, datetime.datetime(2014, 2, 10, 6, 2, 51, 36215))
+
+  def test_decode_unknown_bert_type(self):
+    with self.assertRaises(ValueError):
+      # tuple = (":bert", ":kittens", [])
+      # ValueError: Invalid BERT type: :kittens
+      result = beretta.decode(b'\x83h\x03d\x00\x04bertd\x00\x07'
+                              b'kittensh\x02d\x00\x04bertd\x00\x03nil')

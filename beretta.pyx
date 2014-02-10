@@ -67,6 +67,8 @@ cdef decode_part(object term):
       elif value_type == ":time":
         megaseconds, seconds, microseconds = term[2:]
         return decode_datetime(megaseconds, seconds, microseconds)
+      else:
+        raise ValueError("Invalid BERT type: {0}".format(value_type))
     else:
       terms = [decode_part(x) for x in term]
       return tuple(terms)
