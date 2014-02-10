@@ -1,5 +1,6 @@
 import beretta
 import unittest
+import datetime
 
 
 class DecodeTestCase(unittest.TestCase):
@@ -42,3 +43,8 @@ class DecodeTestCase(unittest.TestCase):
   def test_decode_empty_dict(self):
     result = beretta.decode(b'\x83h\x03d\x00\x04bertd\x00\x04dictj')
     self.assertEqual(result, {})
+
+  def test_decode_datetime(self):
+    result = beretta.decode(b'\x83h\x05d\x00\x04bertd\x00\x04timeb'
+                            b'\x00\x00\x05pb\x00\x00/\x8bb\x00\x00\x8dw')
+    self.assertEqual(result, datetime.datetime(2014, 2, 10, 6, 2, 51, 36215))

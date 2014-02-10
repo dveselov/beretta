@@ -1,5 +1,6 @@
 import beretta
 import unittest
+import datetime
 
 
 class EncodeTestCase(unittest.TestCase):
@@ -42,4 +43,9 @@ class EncodeTestCase(unittest.TestCase):
   def test_encode_empty_dict(self):
     bytes = beretta.encode({})
     self.assertEqual(bytes, b'\x83h\x03d\x00\x04bertd\x00\x04dictj')
+
+  def test_encode_datetime(self):
+    bytes = beretta.encode(datetime.datetime(2014, 2, 10, 6, 2, 51, 36215))
+    self.assertEqual(bytes, b'\x83h\x05d\x00\x04bertd\x00\x04timeb'
+                            b'\x00\x00\x05pb\x00\x00/\x8bb\x00\x00\x8dw')
 
