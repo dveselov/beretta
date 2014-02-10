@@ -1,7 +1,7 @@
-beretta
+beretta [![Build Status](https://travis-ci.org/dieselpoweredkitten/beretta.png?branch=master)](https://travis-ci.org/dieselpoweredkitten/beretta)
 =======
 
-A BERT serializer for your Pythons.
+BERT serializer for your Pythons.
 
 # Installation
 
@@ -14,6 +14,6 @@ $ pip install beretta
 ```python
 import beretta
 
-request = beretta.encode((":call", "DummyModule", "echo", ["hello"])) # => b'\x83h\x04d...'
-response = beretta.decode(request) # => (":call", "DummyModule", ...)
+bytes = beretta.encode([{'key': 'value'}, 42]) # => b'\x83l\x00...'
+beretta.decode(bytes) # => [{'key': 'value'}, 42]
 ```
