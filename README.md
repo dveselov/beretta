@@ -14,6 +14,6 @@ $ pip install beretta
 ```python
 import beretta
 
-bytes = beretta.encode([{'key': 'value'}, 42]) # => b'\x83l\x00...'
-beretta.decode(bytes) # => [{'key': 'value'}, 42]
+binary = beretta.encode([{'key': 'value'}, 42]) # => b'\x83l\x00...'
+beretta.decode(binary) # => [{'key': 'value'}, 42]
 ```
