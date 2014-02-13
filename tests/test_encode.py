@@ -14,9 +14,8 @@ class EncodeTestCase(unittest.TestCase):
 
   def test_encode_list(self):
     bytes = beretta.encode([1, 2, False])
-    self.assertEqual(bytes, b'\x83l\x00\x00\x00\x03h\x02d\x00\x04'
-                            b'bertd\x00\x04truea\x02h\x02d\x00\x04'
-                            b'bertd\x00\x05falsej')
+    self.assertEqual(bytes, b'\x83l\x00\x00\x00\x03a\x01a\x02h\x02d'
+                            b'\x00\x04bertd\x00\x05falsej')
 
   def test_encode_empty_list(self):
     bytes = beretta.encode([])
@@ -48,4 +47,12 @@ class EncodeTestCase(unittest.TestCase):
     bytes = beretta.encode(datetime.datetime(2014, 2, 10, 6, 2, 51, 36215))
     self.assertEqual(bytes, b'\x83h\x05d\x00\x04bertd\x00\x04timeb'
                             b'\x00\x00\x05pb\x00\x00/\x8bb\x00\x00\x8dw')
+
+  def test_encode_0(self):
+    bytes = beretta.encode(0)
+    self.assertEqual(bytes, b'\x83a\x00')
+
+  def test_encode_1(self):
+    bytes = beretta.encode(1)
+    self.assertEqual(bytes, b'\x83a\x01')
 
