@@ -55,3 +55,7 @@ class DecodeTestCase(unittest.TestCase):
       # ValueError: Invalid BERT type: :kittens
       result = beretta.decode(b'\x83h\x03d\x00\x04bertd\x00\x07'
                               b'kittensh\x02d\x00\x04bertd\x00\x03nil')
+
+  def test_decode_zero_float(self):
+    result = beretta.decode(b'\x83c0.00000000000000000000e+00\x00\x00\x00\x00\x00')
+    self.assertEqual(result, 0.0)

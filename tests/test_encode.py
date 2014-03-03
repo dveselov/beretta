@@ -56,3 +56,7 @@ class EncodeTestCase(unittest.TestCase):
     bytes = beretta.encode(1)
     self.assertEqual(bytes, b'\x83a\x01')
 
+  def test_encode_0_float(self):
+    bytes = beretta.encode(0.0)
+    self.assertEqual(bytes, b'\x83c0.00000000000000000000e+00\x00\x00\x00\x00\x00')
+
