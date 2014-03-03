@@ -21,11 +21,11 @@ cdef object decode_datetime(int megaseconds, int seconds, int microseconds):
 cdef encode_part(object term):
   cdef list terms
   term_type = type(term)
-  if term == True and term_type not in (int, float): # python2: 1 == True
+  if term is True:
     return (':bert', ':true')
-  elif term == False and term_type not in (int, float): # python2: 0 / 0.0 == False
+  elif term is False:
     return (':bert', ':false')
-  elif term == None:
+  elif term is None:
     return (':bert', ':undefined')
   elif term == []:
     return (':bert', ':nil')
