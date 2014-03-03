@@ -7,7 +7,7 @@ setup(
   author = 'beretta contributors',
   author_email = 'github@require.pm',
   url = 'https://github.com/dieselpoweredkitten/beretta',
-  version = '0.2',
+  version = '0.2.2',
   description = 'BERT (de)serializer for your Pythons',
   license = 'MIT',
   ext_modules = [Extension('beretta', ['beretta.c'])],
