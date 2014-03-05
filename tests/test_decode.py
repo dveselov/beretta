@@ -62,4 +62,4 @@ class DecodeTestCase(unittest.TestCase):
     result = beretta.decode(b'\x83h\x04d\x00\x04bertd\x00\x05regexm\x00\x00\x00\t'
                             b'^(kitty)$h\x02d\x00\x08extendedd\x00\x08caseless')
     self.assertEqual(result.pattern, '^(kitty)$')
-    self.assertEqual(result.flags, 66)
+    self.assertIn(result.flags, (66, 98))  # python 2.x / 66, python 3.x / 98

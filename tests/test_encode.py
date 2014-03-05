@@ -64,7 +64,7 @@ class EncodeTestCase(unittest.TestCase):
   def test_encode_regex(self):
     regex = re.compile('^(kitty)$', re.I|re.X)
     self.assertEqual(regex.pattern, '^(kitty)$')
-    self.assertEqual(regex.flags, 66)
+    self.assertIn(regex.flags, (66, 98)) # python 2.x / 66, python 3.x / 98
     bytes = beretta.encode(regex)
     self.assertEqual(bytes, b'\x83h\x04d\x00\x04bertd\x00\x05regexm\x00\x00\x00\t'
                             b'^(kitty)$h\x02d\x00\x08extendedd\x00\x08caseless')
