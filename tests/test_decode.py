@@ -10,7 +10,7 @@ class DecodeTestCase(unittest.TestCase):
                             b'\x06Modulem\x00\x00\x00\x08functionl'
                             b'\x00\x00\x00\x01h\x02d\x00\x04bertd'
                             b'\x00\x04truej')
-    self.assertEqual(result, (":call", "Module", "function", [True]))
+    self.assertEqual(result, (':call', 'Module', 'function', [True]))
 
   def test_decode_list(self):
     result = beretta.decode(b'\x83l\x00\x00\x00\x03h\x02d\x00\x04'
@@ -51,11 +51,15 @@ class DecodeTestCase(unittest.TestCase):
 
   def test_decode_unknown_bert_type(self):
     with self.assertRaises(ValueError):
-      # tuple = (":bert", ":kittens", [])
-      # ValueError: Invalid BERT type: :kittens
       result = beretta.decode(b'\x83h\x03d\x00\x04bertd\x00\x07'
                               b'kittensh\x02d\x00\x04bertd\x00\x03nil')
 
   def test_decode_zero_float(self):
     result = beretta.decode(b'\x83c0.00000000000000000000e+00\x00\x00\x00\x00\x00')
     self.assertEqual(result, 0.0)
+
+  def test_decode_regex(self):
+    result = beretta.decode(b'\x83h\x04d\x00\x04bertd\x00\x05regexm\x00\x00\x00\t'
+                            b'^(kitty)$h\x02d\x00\x08extendedd\x00\x08caseless')
+    self.assertEqual(result.pattern, '^(kitty)$')
+    self.assertEqual(result.flags, 66)

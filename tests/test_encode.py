@@ -1,3 +1,4 @@
+import re
 import beretta
 import unittest
 import datetime
@@ -6,7 +7,7 @@ import datetime
 class EncodeTestCase(unittest.TestCase):
 
   def test_encode_tuple(self):
-    bytes = beretta.encode((":call", "Module", "function", [True]))
+    bytes = beretta.encode((':call', 'Module', 'function', [True]))
     self.assertEqual(bytes, b'\x83h\x04d\x00\x04callm\x00\x00\x00'
                             b'\x06Modulem\x00\x00\x00\x08functionl'
                             b'\x00\x00\x00\x01h\x02d\x00\x04bertd'
@@ -59,4 +60,12 @@ class EncodeTestCase(unittest.TestCase):
   def test_encode_0_float(self):
     bytes = beretta.encode(0.0)
     self.assertEqual(bytes, b'\x83c0.00000000000000000000e+00\x00\x00\x00\x00\x00')
+
+  def test_encode_regex(self):
+    regex = re.compile('^(kitty)$', re.I|re.X)
+    self.assertEqual(regex.pattern, '^(kitty)$')
+    self.assertEqual(regex.flags, 66)
+    bytes = beretta.encode(regex)
+    self.assertEqual(bytes, b'\x83h\x04d\x00\x04bertd\x00\x05regexm\x00\x00\x00\t'
+                            b'^(kitty)$h\x02d\x00\x08extendedd\x00\x08caseless')
 
