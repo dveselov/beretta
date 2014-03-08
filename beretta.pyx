@@ -63,11 +63,11 @@ cdef decode_part(object term):
   if term_type == tuple:
     if term[0] == ":bert":
       value_type = term[1]
-      if value_type == True:
+      if value_type == ":true":
         return True
-      elif value_type == False:
+      elif value_type == ":false":
         return False
-      elif value_type == None:
+      elif value_type == ":undefined":
         return None
       elif value_type == ":nil":
         return []
