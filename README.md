@@ -24,7 +24,7 @@ beretta.decode(binary) # => [{'key': 'value'}, 42]
     <tr>
         <td>Type</td>
         <td>Python</td>
-        <td>Erlang</td>
+        <td>BERT</td>
     </tr>
     <tr>
         <td>Time</td>
