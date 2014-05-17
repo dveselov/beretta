@@ -1,2 +1,3 @@
-setup.py
-beretta.c
+include setup.py
+include beretta.c
+include beretta/__init__.py
