@@ -3,6 +3,10 @@ import datetime
 import termformat
 
 
+__version__ = "0.2.5"
+__is_cython__ = True
+
+
 REGEX_TYPE = type(re.compile("kittens"))
 ZERO_HOUR = datetime.datetime(1970, 1, 1, 0, 0)
 
@@ -96,11 +100,9 @@ cdef decode_part(object term):
       else:
         raise ValueError("Invalid BERT type: {0}".format(value_type))
     else:
-      terms = [decode_part(x) for x in term]
-      return tuple(terms)
+      return tuple([decode_part(x) for x in term])
   elif term_type == list:
-    terms = [decode_part(x) for x in term]
-    return terms
+    return [decode_part(x) for x in term]
   else:
     return term
 
