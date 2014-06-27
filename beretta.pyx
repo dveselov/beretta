@@ -4,7 +4,7 @@ import datetime
 import termformat
 
 
-__version__ = "0.2.5"
+__version__ = "0.2.6"
 __is_cython__ = True
 
 
