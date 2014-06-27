@@ -11,7 +11,7 @@ __is_cython__ = True
 REGEX_TYPE = type(re.compile("kittens"))
 ZERO_HOUR = datetime.datetime(1970, 1, 1, 0, 0)
 
-cdef tuple encode_datetime(object time):
+cdef inline tuple encode_datetime(object time):
   cdef int megaseconds, seconds, microseconds
   delta = time - ZERO_HOUR
   seconds = delta.days * 24 * 60 * 60 + delta.seconds
@@ -20,12 +20,12 @@ cdef tuple encode_datetime(object time):
   microseconds = time.microsecond
   return (":bert", ":time", megaseconds, seconds, microseconds)
 
-cdef object decode_datetime(int megaseconds, int seconds, int microseconds):
+cdef inline object decode_datetime(int megaseconds, int seconds, int microseconds):
   seconds = megaseconds * 1000000 + seconds
   timestamp = datetime.datetime.utcfromtimestamp(seconds)
   return timestamp.replace(microsecond=microseconds)
 
-cdef object encode_term(object term):
+cdef inline object encode_term(object term):
   cdef list terms
   term_type = type(term)
   if term is True:
@@ -61,7 +61,7 @@ cdef object encode_term(object term):
   else:
     return term
 
-cdef object decode_term(object term):
+cdef inline object decode_term(object term):
   cdef list terms
   cdef int flags
   term_type = type(term)
