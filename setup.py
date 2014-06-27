@@ -1,4 +1,4 @@
-import sys
+import platform
 from distutils.core import setup
 from distutils.extension import Extension
 
@@ -20,16 +20,18 @@ base = {
   )
 }
 
-if hasattr(sys, 'pypy_version_info'):
-  modules = {
-    'packages': ['beretta'],
-  }
-else:
-  modules = {
+implementation = platform.python_implementation()
+
+if implementation == "CPython":
+  packages = {
     'ext_modules': [
       Extension('beretta', ['beretta.c'])
     ],
   }
-base.update(modules)
+else:
+  packages = {
+    'packages': ['beretta'],
+  }
 
+base.update(packages)
 setup(**base)
