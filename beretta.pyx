@@ -1,3 +1,4 @@
+# coding: utf-8
 import re
 import datetime
 import termformat
@@ -24,7 +25,7 @@ cdef object decode_datetime(int megaseconds, int seconds, int microseconds):
   timestamp = datetime.datetime.utcfromtimestamp(seconds)
   return timestamp.replace(microsecond=microseconds)
 
-cdef encode_part(object term):
+cdef object encode_term(object term):
   cdef list terms
   term_type = type(term)
   if term is True:
@@ -36,13 +37,13 @@ cdef encode_part(object term):
   elif term == []:
     return (":bert", ":nil")
   elif term_type == tuple:
-    terms = [encode_part(x) for x in term]
+    terms = [encode_term(x) for x in term]
     return tuple(terms)
   elif term_type == list:
-    terms = [encode_part(x) for x in term]
+    terms = [encode_term(x) for x in term]
     return terms
   elif term_type == dict:
-    terms = [encode_part(x) for x in term.items()]
+    terms = [encode_term(x) for x in term.items()]
     return (":bert", ":dict", terms)
   elif term_type == datetime.datetime:
     return encode_datetime(term)
@@ -60,7 +61,7 @@ cdef encode_part(object term):
   else:
     return term
 
-cdef decode_part(object term):
+cdef object decode_term(object term):
   cdef list terms
   cdef int flags
   term_type = type(term)
@@ -80,7 +81,7 @@ cdef decode_part(object term):
         if not dict_items:
           return {}
         else:
-          terms = [[decode_part(key), decode_part(value)] for key, value in dict_items]
+          terms = [[decode_term(key), decode_term(value)] for key, value in dict_items]
           return {key:value for key, value in terms}
       elif value_type == ":time":
         megaseconds, seconds, microseconds = term[2:]
@@ -100,17 +101,17 @@ cdef decode_part(object term):
       else:
         raise ValueError("Invalid BERT type: {0}".format(value_type))
     else:
-      return tuple([decode_part(x) for x in term])
+      return tuple([decode_term(x) for x in term])
   elif term_type == list:
-    return [decode_part(x) for x in term]
+    return [decode_term(x) for x in term]
   else:
     return term
 
 
 cpdef bytes encode(object term):
-  bert = encode_part(term)
+  bert = encode_term(term)
   return termformat.encode(bert)
 
 cpdef object decode(bytes term):
   bert = termformat.decode(term)
-  return decode_part(bert)
+  return decode_term(bert)

@@ -23,7 +23,7 @@ def decode_datetime(megaseconds, seconds, microseconds):
   timestamp = datetime.datetime.utcfromtimestamp(seconds)
   return timestamp.replace(microsecond=microseconds)
 
-def encode_part(term):
+def encode_term(term):
   term_type = type(term)
   if term is True:
     return (":bert", ":true")
@@ -34,14 +34,11 @@ def encode_part(term):
   elif term == []:
     return (":bert", ":nil")
   elif term_type == tuple:
-    terms = [encode_part(x) for x in term]
-    return tuple(terms)
+    return tuple([encode_term(x) for x in term])
   elif term_type == list:
-    terms = [encode_part(x) for x in term]
-    return terms
+    return [encode_term(x) for x in term]
   elif term_type == dict:
-    terms = [encode_part(x) for x in term.items()]
-    return (":bert", ":dict", terms)
+    return (":bert", ":dict", [encode_term(x) for x in term.items()])
   elif term_type == datetime.datetime:
     return encode_datetime(term)
   elif term_type == REGEX_TYPE:
@@ -58,7 +55,7 @@ def encode_part(term):
   else:
     return term
 
-def decode_part(term):
+def decode_term(term):
   term_type = type(term)
   if term_type == tuple:
     if term[0] == ":bert":
@@ -76,7 +73,7 @@ def decode_part(term):
         if not dict_items:
           return {}
         else:
-          terms = [[decode_part(key), decode_part(value)] for key, value in dict_items]
+          terms = [[decode_term(key), decode_term(value)] for key, value in dict_items]
           return {key:value for key, value in terms}
       elif value_type == ":time":
         megaseconds, seconds, microseconds = term[2:]
@@ -96,16 +93,16 @@ def decode_part(term):
       else:
         raise ValueError("Invalid BERT type: {0}".format(value_type))
     else:
-      return tuple([decode_part(x) for x in term])
+      return tuple([decode_term(x) for x in term])
   elif term_type == list:
-    return [decode_part(x) for x in term]
+    return [decode_term(x) for x in term]
   else:
     return term
 
 def encode(term):
-  bert = encode_part(term)
+  bert = encode_term(term)
   return termformat.encode(bert)
 
 def decode(term):
   bert = termformat.decode(term)
-  return decode_part(bert)
+  return decode_term(bert)
