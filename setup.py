@@ -16,7 +16,7 @@ base = {
     'Programming Language :: Python :: 3.3',
   ),
   'install_requires': (
-    'termformat>=0.1.5',
+    'termformat>=0.1.6',
   )
 }
 
