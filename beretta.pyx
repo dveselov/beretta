@@ -4,7 +4,7 @@ import datetime
 import termformat
 
 
-__version__ = "0.2.6"
+__version__ = "0.3.0"
 __is_cython__ = True
 
 
@@ -108,9 +108,9 @@ cdef inline object decode_term(object term):
     return term
 
 
-cpdef bytes encode(object term):
+cpdef bytes encode(object term, compressed=0):
   bert = encode_term(term)
-  return termformat.encode(bert)
+  return termformat.encode(bert, compressed=compressed)
 
 cpdef object decode(bytes term):
   bert = termformat.decode(term)

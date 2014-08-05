@@ -6,6 +6,10 @@ import datetime
 
 class EncodeTestCase(unittest.TestCase):
 
+  def test_encode_compressed(self):
+    bytes = beretta.encode((':call', 'Module', 'function', []) * 4, compressed=6)
+    self.assertTrue(bytes.startswith(b'\x83P'))
+
   def test_encode_tuple(self):
     bytes = beretta.encode((':call', 'Module', 'function', [True]))
     self.assertEqual(bytes, b'\x83h\x04d\x00\x04callm\x00\x00\x00'

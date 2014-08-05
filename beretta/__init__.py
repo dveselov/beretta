@@ -3,7 +3,7 @@ import datetime
 import termformat
 
 
-__version__ = "0.2.6"
+__version__ = "0.3.0"
 __is_cython__ = False
 
 
@@ -99,9 +99,9 @@ def decode_term(term):
   else:
     return term
 
-def encode(term):
+def encode(term, compressed=0):
   bert = encode_term(term)
-  return termformat.encode(bert)
+  return termformat.encode(bert, compressed=compressed)
 
 def decode(term):
   bert = termformat.decode(term)
