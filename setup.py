@@ -7,7 +7,7 @@ base = {
   'url': 'https://github.com/tyrannosaurus/beretta',
   'author': 'beretta contributors',
   'author_email': 'github@require.pm',
-  'version': '0.2.6',
+  'version': '0.3.0',
   'description': 'BERT (de)serializer for your Pythons',
   'license': 'MIT',
   'classifiers': (
