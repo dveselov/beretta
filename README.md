@@ -16,6 +16,10 @@ import beretta
 
 binary = beretta.encode([{'key': 'value'}, 42]) # => b'\x83l\x00...'
 beretta.decode(binary) # => [{'key': 'value'}, 42]
+
+data = [0 for _ in range(1024)]
+compressed = beretta.encode(data, compressed=6)
+assert len(compressed) < beretta.encode(data)
 ```
 
 # Datatypes representation
