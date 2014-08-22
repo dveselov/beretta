@@ -19,7 +19,7 @@ beretta.decode(binary) # => [{'key': 'value'}, 42]
 
 data = [0 for _ in range(1024)]
 compressed = beretta.encode(data, compressed=6)
-assert len(compressed) < beretta.encode(data)
+assert len(compressed) < len(beretta.encode(data))
 ```
 
 # Datatypes representation
