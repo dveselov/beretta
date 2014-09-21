@@ -6,6 +6,7 @@ BERT serializer for your Pythons.
 # Installation
 
 ```bash
+$ apt-get install python-dev
 $ pip install beretta
 ```
 
