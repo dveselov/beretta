@@ -1,7 +1,7 @@
 beretta [![Build Status](https://travis-ci.org/dveselov/beretta.png?branch=master)](https://travis-ci.org/dveselov/beretta)
 =======
 
-BERT serializer for your Pythons.
+[BERT](http://bert-rpc.org/) serializer for your Pythons.
 
 # Installation
 
